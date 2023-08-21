@@ -1,24 +1,20 @@
 import discord
 import json
 
-mdmbot = discord.Client()
+self_bot = discord.Client()
 
 with open("./config.json", "r") as config:
     get = json.load(config)
     token = get["token"]
     message = get["message"]
 
-@mdmbot.event
-async def on_connect():
-  print("User Logged Into:")
-  print("-----------------")
-  print(mdmbot.user.name)
-  print(mdmbot.user.id)
-  print("-----------------")
-  print("Started massing..")
-  print("-----------------")
+@self_bot.event
+async def on_ready():
+  print("mass-dm-friend is running")
 
-  for user in mdmbot.user.friends:
+  print(f"longin as : {self_bot.name} ")
+
+  for user in self_bot.user.friends:
     try:
 
       await user.send(message)
@@ -26,6 +22,6 @@ async def on_connect():
       print(f"Successfully message sent to: {user.name}")
     except:
        print(f"Failed to send message to: {user.name}")
-  print(f"{mdmbot.user.name} hass finished mdming!")
+  print(f"{self_bot.user.name} hass finished mdming!")
 
-mdmbot.run(token, bot=False)
+self_bot.run(token, bot=False)
